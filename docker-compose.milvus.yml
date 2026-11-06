@@ -1,0 +1,31 @@
+name: devflow-ai-vector
+
+services:
+  milvus:
+    image: milvusdb/milvus:v2.5.27
+    container_name: devflow-ai-vector-milvus
+    restart: unless-stopped
+    command: ["milvus", "run", "standalone"]
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      DEPLOY_MODE: STANDALONE
+      ETCD_USE_EMBED: "true"
+      ETCD_DATA_DIR: /var/lib/milvus/etcd
+      ETCD_CONFIG_PATH: /milvus/configs/embedEtcd.yaml
+      COMMON_STORAGETYPE: local
+    ports:
+      - "127.0.0.1:19530:19530"
+      - "127.0.0.1:9091:9091"
+    volumes:
+      - milvus_data:/var/lib/milvus
+      - ./scripts/milvus/embed-etcd.yaml:/milvus/configs/embedEtcd.yaml:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
+      interval: 10s
+      start_period: 90s
+      timeout: 5s
+      retries: 12
+
+volumes:
+  milvus_data:

@@ -1,0 +1,67 @@
+{
+  "schema_version": 2,
+  "name": "devflow-local-rag-baseline",
+  "label": "DevFlow 本机 RAG 固定评测",
+  "description": "使用随项目提供的员工手册验证检索、来源引用、事实回答和资料不足时的拒答。",
+  "repository_names": ["course-demo/devflow-sample-api"],
+  "recommended": true,
+  "cases": [
+    {
+      "id": "p0-response",
+      "question": "根据员工手册，P0 事故要求多久响应，多久建立协作群？",
+      "reference": "值班工程师应在 5 分钟内响应，在 15 分钟内建立事故协作群。",
+      "source_file": "rag_employee_handbook.md",
+      "source_type": "knowledge_file"
+    },
+    {
+      "id": "annual-leave",
+      "question": "根据员工手册，正式员工每年有多少天年假，需要提前多久申请？",
+      "reference": "正式员工每个自然年享有 10 天带薪年假，至少提前 3 个工作日在 OA 系统申请，由直属主管审批。",
+      "source_file": "rag_employee_handbook.md",
+      "source_type": "knowledge_file"
+    },
+    {
+      "id": "leave-carryover",
+      "question": "根据员工手册，结转到下一年的年假最晚什么时候使用？",
+      "reference": "结转的年假必须在次年 3 月 31 日前使用，逾期失效。",
+      "source_file": "rag_employee_handbook.md",
+      "source_type": "knowledge_file"
+    },
+    {
+      "id": "remote-work",
+      "question": "根据员工手册，每周最多远程办公几天，最晚何时提交申请？",
+      "reference": "每周最多申请 2 天远程办公，申请应在前一工作日 18:00 前提交。",
+      "source_file": "rag_employee_handbook.md",
+      "source_type": "knowledge_file"
+    },
+    {
+      "id": "incident-postmortem",
+      "question": "根据员工手册，故障恢复后多久完成复盘，谁指定复盘负责人？",
+      "reference": "服务恢复后 2 个工作日内完成复盘文档，负责人由当次 Incident Commander 指定。",
+      "source_file": "rag_employee_handbook.md",
+      "source_type": "knowledge_file"
+    },
+    {
+      "id": "expense-approval",
+      "question": "根据员工手册，单笔费用超过 5000 元需要谁审批，凭证多久内上传？",
+      "reference": "费用由直属主管审批，5000 元以上还需部门负责人审批。发票和付款凭证应在费用发生后 30 天内上传财务系统。",
+      "source_file": "rag_employee_handbook.md",
+      "source_type": "knowledge_file"
+    },
+    {
+      "id": "hotel-policy",
+      "question": "根据员工手册，一线城市和其他城市的差旅住宿标准分别是多少？",
+      "reference": "一线城市每晚不超过 600 元，其他城市每晚不超过 450 元。",
+      "source_file": "rag_employee_handbook.md",
+      "source_type": "knowledge_file"
+    },
+    {
+      "id": "unknown-bonus-policy",
+      "kind": "negative",
+      "question": "员工手册规定年终奖固定发几个月工资？请仅依据手册回答。",
+      "reference": "员工手册没有提供年终奖规定，应明确表示资料不足，无法确定具体月数。",
+      "source_type": "knowledge_file",
+      "answer_regex": "(?s).*(未|没有|无法|不足|不明确|不清楚|不确定|缺少).*"
+    }
+  ]
+}
